@@ -4,11 +4,6 @@ import { UserRepository } from './user.repository';
 import { UserMapper } from './user.mapper';
 import { PaginatedResult } from '../../shared/types';
 
-type User = {
-  firstName: string;
-  lastName: string;
-};
-
 @Injectable()
 export class UserService {
   constructor(
@@ -28,12 +23,16 @@ export class UserService {
   async findAllAndPaginate(
     page: number,
     limit: number,
-    filter: UsersFilter = {}
+    filter: UsersFilter = {},
   ): Promise<PaginatedResult<UserDto>> {
-    const users =
-      await this.userRepository.findAllAndPaginate(page, limit, filter);
-    const userDtos =
-      users.map(this.userMapper.prepareUserDto);
+    const users = await this.userRepository.findAllAndPaginate(
+      page,
+      limit,
+      filter,
+    );
+    const userDtos = users.map((user) =>
+      this.userMapper.preparePopulatedUserDto(user),
+    );
 
     return {
       data: userDtos,
@@ -44,7 +43,7 @@ export class UserService {
 
   async findAll() {
     const users = await this.userRepository.findAll();
-    return users.map(this.userMapper.prepareUserDto);
+    return users.map((user) => this.userMapper.prepareUserDto(user));
   }
 
   async create(dto: CreateUserDto): Promise<UserDto> {

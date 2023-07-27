@@ -7,5 +7,6 @@ import { DepartmentMapper } from './department.mapper';
 @Module({
   controllers: [DepartmentController],
   providers: [DepartmentService, DepartmentRepository, DepartmentMapper],
+  exports: [DepartmentMapper],
 })
 export class DepartmentModule {}

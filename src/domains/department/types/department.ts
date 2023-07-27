@@ -1,6 +1,6 @@
-export type Department = {
+export type DepartmentSchema = {
   id: number;
   name: string;
 
-  createdAt: Date;
-}
+  created_at: Date;
+};

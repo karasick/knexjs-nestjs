@@ -1,4 +1,9 @@
+import { IsNumber, IsString } from 'class-validator';
+
 export class CreateUserDto {
-  firstName: string;
-  lastName: string;
+  @IsString()
+  name: string;
+
+  @IsNumber()
+  departmentId: number;
 }

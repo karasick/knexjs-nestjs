@@ -1,17 +1,20 @@
-import { Department } from '../../department/types';
-
-export type UserSchema = {
-  id: number;
-  name: string;
-  created_at: string;
-
-  department_id: number;
-}
+import { DepartmentSchema } from '../../department/types';
 
 export type User = {
   id: number;
   name: string;
-  createdAt: Date;
+  created_at: Date;
+};
 
-  department: Department;
-}
+export type PopulatedUser = User & {
+  department?: DepartmentSchema;
+};
+
+export type UserSchema = User & {
+  department_id?: number;
+};
+
+export type PopulatedUserSchema = UserSchema & {
+  department_name?: string;
+  department_created_at?: Date;
+};
